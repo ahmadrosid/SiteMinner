@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "outDir": "build",
+      "target": "es2015",
+      "module": "commonjs",
+      "strict": true,
+      "lib": ["es2015", "es2019", "dom"],
+      "esModuleInterop": true,
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+}

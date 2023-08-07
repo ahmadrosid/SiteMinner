@@ -12,3 +12,5 @@ curl --request POST \
 ```
 
 This API using browserless to scrape the url, please grab your access token from [https://www.browserless.io/](https://www.browserless.io/).
+
+[OpenAPI spec](https://site-minner.vercel.app/swagger.json)

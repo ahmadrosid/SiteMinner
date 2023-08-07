@@ -10,3 +10,5 @@ curl --request POST \
 	"siteUrl": "https://ahmadrosid.com/blog/cancel-fetch-request"
 }'
 ```
+
+This API using browserless to scrape the url, please grab your access token from [https://www.browserless.io/](https://www.browserless.io/).

@@ -9,12 +9,18 @@ const PostSchema = z.object({
   content: z.string(),
 });
 
+const ErrorSchema = z.object({
+  error: z.string(),
+});
+
 export const apiContract = contract.router({
   markdown: {
     method: "POST",
     path: "/markdown",
     responses: {
       200: PostSchema,
+      401: ErrorSchema,
+      404: ErrorSchema,
     },
     body: z.object({
       siteUrl: z.string(),

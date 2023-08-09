@@ -4,7 +4,7 @@ import { initServer, createExpressEndpoints } from "@ts-rest/express";
 import { apiContract } from "./contract";
 import { generateOpenApi } from "@ts-rest/open-api";
 import { serve, setup } from "swagger-ui-express";
-import TurndownService from "turndown";
+import { extractFromHtml } from "@extractus/article-extractor";
 import puppeteer from "puppeteer-core";
 
 const app = express();
@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const restServer = initServer();
-const turndownService = new TurndownService();
 
 function cleanUpHtml(html: string) {
   let newHtml = html.replace(
@@ -34,7 +33,12 @@ const router = restServer.router(apiContract, {
   markdown: async ({ body, query }) => {
     console.log(body, query);
     if (!query.access_token) {
-      throw new Error("access_token is required");
+      return {
+        status: 401,
+        body: {
+          error: "Unauthorized: access_token is required",
+        },
+      };
     }
 
     const browser = await puppeteer.connect({
@@ -43,17 +47,25 @@ const router = restServer.router(apiContract, {
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
-    await page.goto(body.siteUrl, { waitUntil: "networkidle2" });
-    const title = await page.title();
-    const html = await page.evaluate(() => document.body.innerHTML);
+    await page.goto(body.siteUrl, { waitUntil: "domcontentloaded" });
+    const html = await page.content();
 
-    const content = turndownService.turndown(cleanUpHtml(html));
+    const data = await extractFromHtml(cleanUpHtml(html));
+    if (!data) {
+      return {
+        status: 404,
+        body: {
+          error: "No content found",
+        },
+      };
+    }
+
     return {
       status: 200,
       body: {
         url: body.siteUrl,
-        content,
-        title,
+        content: data?.content || "",
+        title: data?.title || "",
       },
     };
   },

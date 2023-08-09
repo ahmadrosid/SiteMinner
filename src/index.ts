@@ -6,6 +6,7 @@ import { generateOpenApi } from "@ts-rest/open-api";
 import { serve, setup } from "swagger-ui-express";
 import { extractFromHtml } from "@extractus/article-extractor";
 import puppeteer from "puppeteer-core";
+import TurndownService from "turndown";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const restServer = initServer();
+const turndownService = new TurndownService();
 
 function cleanUpHtml(html: string) {
   let newHtml = html.replace(
@@ -31,7 +33,6 @@ function cleanUpHtml(html: string) {
 
 const router = restServer.router(apiContract, {
   markdown: async ({ body, query }) => {
-    console.log(body, query);
     if (!query.access_token) {
       return {
         status: 401,
@@ -50,7 +51,7 @@ const router = restServer.router(apiContract, {
     await page.goto(body.siteUrl, { waitUntil: "domcontentloaded" });
     const html = await page.content();
 
-    const data = await extractFromHtml(cleanUpHtml(html));
+    const data = await extractFromHtml(html, body.siteUrl);
     if (!data) {
       return {
         status: 404,
@@ -64,7 +65,7 @@ const router = restServer.router(apiContract, {
       status: 200,
       body: {
         url: body.siteUrl,
-        content: data?.content || "",
+        content: turndownService.turndown(data?.content || ""),
         title: data?.title || "",
       },
     };

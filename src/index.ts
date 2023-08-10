@@ -13,10 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("*.css", (req, res, next) => {
-  res.set("Content-Type", "text/css");
-  next();
-});
 
 const restServer = initServer();
 const turndownService = new TurndownService();
@@ -106,13 +102,7 @@ openapiDocument.paths["/markdown"].post.parameters = [];
 
 const apiDocs = express.Router();
 apiDocs.use(serve);
-apiDocs.get(
-  "/",
-  setup(openapiDocument, {
-    customCssUrl:
-      "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css",
-  })
-);
+apiDocs.get("/", setup(openapiDocument));
 app.use("/docs", apiDocs);
 app.get("/swagger.json", (req, res) => {
   res.contentType("application/json");

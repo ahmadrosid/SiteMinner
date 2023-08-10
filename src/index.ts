@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { initServer, createExpressEndpoints } from "@ts-rest/express";
-import { apiContract } from "./lib/contract";
+import { apiContract } from "./lib/contract.js";
 import { generateOpenApi } from "@ts-rest/open-api";
 import * as swaggerUi from "swagger-ui-express";
-import * as controller from "./controller";
+import * as controller from "./controller/index.js";
 
 const app = express();
 app.use(cors());

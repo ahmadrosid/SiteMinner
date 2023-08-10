@@ -1,2 +1,2 @@
-export * from "./article.controller";
-export * from "./embed.controller";
+export * from "./article.controller.js";
+export * from "./embed.controller.js";

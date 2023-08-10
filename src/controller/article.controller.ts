@@ -1,8 +1,8 @@
-import { apiContract } from "../lib/contract";
+import { apiContract } from "../lib/contract.js";
 import { ServerInferRequest, ServerInferResponses } from "@ts-rest/core";
 import { extractFromHtml } from "@extractus/article-extractor";
 import TurndownService from "turndown";
-import { getHtmlFromUrl } from "../lib/browser";
+import { getHtmlFromUrl } from "../lib/browser.js";
 const turndownService = new TurndownService();
 
 type Request = ServerInferRequest<typeof apiContract>["markdown"];

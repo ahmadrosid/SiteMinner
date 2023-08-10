@@ -100,10 +100,7 @@ const openapiDocument = generateOpenApi(apiContract, openApiConfig, {
 // Hide access_token from markdown endpoint
 openapiDocument.paths["/markdown"].post.parameters = [];
 
-const apiDocs = express.Router();
-apiDocs.use(serve);
-apiDocs.get("/", setup(openapiDocument));
-app.use("/docs", apiDocs);
+app.use("/docs", serve, setup(openapiDocument));
 app.get("/swagger.json", (req, res) => {
   res.contentType("application/json");
   res.send(JSON.stringify(openapiDocument, null, 2));

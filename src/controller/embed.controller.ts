@@ -1,4 +1,4 @@
-import { apiContract } from "..//lib/contract";
+import { apiContract } from "../lib/contract";
 import { ServerInferRequest, ServerInferResponses } from "@ts-rest/core";
 import { extract } from "@extractus/oembed-extractor";
 
@@ -31,7 +31,7 @@ export async function embedExrtractor({ query }: Request): Promise<Response> {
     status: 200,
     body: {
       url: query.url,
-      title: data.title || "",
+      title: data.title,
       data: data,
     },
   };

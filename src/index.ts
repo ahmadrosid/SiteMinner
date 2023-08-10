@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { initServer, createExpressEndpoints } from "@ts-rest/express";
-import { apiContract } from "./contract";
+import { apiContract } from "./lib/contract";
 import { generateOpenApi } from "@ts-rest/open-api";
 import * as swaggerUi from "swagger-ui-express";
 import * as controller from "./controller";

@@ -1,4 +1,4 @@
-import { apiContract } from "../contract";
+import { apiContract } from "..//lib/contract";
 import { ServerInferRequest, ServerInferResponses } from "@ts-rest/core";
 import { extract } from "@extractus/oembed-extractor";
 

@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-export const contract = initContract();
+const contract = initContract();
 
 const MardownResponseSchema = z.object({
   url: z.string(),
@@ -19,7 +19,7 @@ const ErrorSchema = z.object({
   error: z.string(),
 });
 
-export const apiContract = contract.router({
+const apiContract = contract.router({
   embedExrtractor: {
     method: "GET",
     path: "/embed-extractor",
@@ -51,3 +51,5 @@ export const apiContract = contract.router({
     summary: "Turn any website into markdown text by website url",
   },
 });
+
+export { apiContract };

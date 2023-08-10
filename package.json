@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@extractus/article-extractor": "^7.3.1",
+    "@extractus/oembed-extractor": "^4.0.0",
     "@ts-rest/core": "^3.26.4",
     "@ts-rest/express": "^3.26.4",
     "@ts-rest/open-api": "^3.26.4",

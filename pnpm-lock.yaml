@@ -8,6 +8,9 @@ dependencies:
   '@extractus/article-extractor':
     specifier: ^7.3.1
     version: 7.3.1
+  '@extractus/oembed-extractor':
+    specifier: ^4.0.0
+    version: 4.0.0
   '@ts-rest/core':
     specifier: ^3.26.4
     version: 3.26.4(zod@3.21.4)
@@ -104,6 +107,15 @@ packages:
       cross-fetch: 4.0.0
       linkedom: 0.15.1
       sanitize-html: 2.11.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@extractus/oembed-extractor@4.0.0:
+    resolution: {integrity: sha512-xB2bTkgp8HoNJJT6lOUJQq4E4qjCHPwwsr9qXbIBSfmNkl+UMrzgsivJZYiKzYKWSXqF3HENRFBs9lCoJV9DUQ==}
+    engines: {node: '>= 15'}
+    dependencies:
+      cross-fetch: 4.0.0
     transitivePeerDependencies:
       - encoding
     dev: false

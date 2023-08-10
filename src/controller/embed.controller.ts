@@ -17,7 +17,7 @@ export async function embedExrtractor({ query }: Request): Promise<Response> {
     };
   }
 
-  const data = await extract(query.siteUrl);
+  const data = await extract(query.url);
   if (!data) {
     return {
       status: 404,
@@ -30,7 +30,7 @@ export async function embedExrtractor({ query }: Request): Promise<Response> {
   return {
     status: 200,
     body: {
-      url: query.siteUrl,
+      url: query.url,
       title: data.title || "",
       data: data,
     },

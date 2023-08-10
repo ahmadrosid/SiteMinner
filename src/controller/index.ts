@@ -1,7 +1,2 @@
-import { markdown } from "./article.controller";
-import { embedExrtractor } from "./embed.controller";
-
-export default {
-  markdown,
-  embedExrtractor,
-};
+export * from "./article.controller";
+export * from "./embed.controller";

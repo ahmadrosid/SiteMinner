@@ -19,11 +19,11 @@ export async function markdown({ query, body }: Request): Promise<Response> {
   }
 
   const html = await getHtmlFromUrl({
-    url: body.siteUrl,
+    url: body.url,
     access_token: query.access_token,
   });
 
-  const data = await extractFromHtml(html, body.siteUrl);
+  const data = await extractFromHtml(html, body.url);
   if (!data) {
     return {
       status: 404,
@@ -36,7 +36,7 @@ export async function markdown({ query, body }: Request): Promise<Response> {
   return {
     status: 200,
     body: {
-      url: body.siteUrl,
+      url: body.url,
       content: turndownService.turndown(data?.content || ""),
       title: data?.title || "",
     },

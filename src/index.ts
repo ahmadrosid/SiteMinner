@@ -4,7 +4,7 @@ import { initServer, createExpressEndpoints } from "@ts-rest/express";
 import { apiContract } from "./contract";
 import { generateOpenApi } from "@ts-rest/open-api";
 import * as swaggerUi from "swagger-ui-express";
-import controller from "./controller";
+import * as controller from "./controller";
 
 const app = express();
 app.use(cors());

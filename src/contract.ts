@@ -20,22 +20,6 @@ const ErrorSchema = z.object({
 });
 
 export const apiContract = contract.router({
-  markdown: {
-    method: "POST",
-    path: "/markdown",
-    responses: {
-      200: MardownResponseSchema,
-      401: ErrorSchema,
-      404: ErrorSchema,
-    },
-    body: z.object({
-      siteUrl: z.string(),
-    }),
-    query: z.object({
-      access_token: z.string(),
-    }),
-    summary: "Turn any website into markdown text by website url",
-  },
   embedExrtractor: {
     method: "GET",
     path: "/embed-extractor",
@@ -45,9 +29,25 @@ export const apiContract = contract.router({
       404: ErrorSchema,
     },
     query: z.object({
-      siteUrl: z.string(),
+      url: z.string(),
       access_token: z.string(),
     }),
     summary: "Get embedding data from any url",
+  },
+  markdown: {
+    method: "POST",
+    path: "/markdown",
+    responses: {
+      200: MardownResponseSchema,
+      401: ErrorSchema,
+      404: ErrorSchema,
+    },
+    body: z.object({
+      url: z.string(),
+    }),
+    query: z.object({
+      access_token: z.string(),
+    }),
+    summary: "Turn any website into markdown text by website url",
   },
 });

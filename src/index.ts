@@ -40,7 +40,11 @@ const openApiDocument = generateOpenApi(apiContract, openApiConfig, {
   setOperationId: true,
 });
 openApiDocument.paths["/markdown"].post.parameters = [];
-openApiDocument.paths["/embed-extractor"].get.parameters = [];
+openApiDocument.paths["/embed-extractor"].get.parameters =
+  openApiDocument.paths["/embed-extractor"].get.parameters.filter(
+    (item: any) => item.name !== "access_token"
+  );
+
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 app.get("/swagger.json", (req, res) => {

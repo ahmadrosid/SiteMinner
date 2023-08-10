@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer-core";
 
-function cleanUpHtml(html: string) {
+export function cleanUpHtml(html: string) {
   let newHtml = html.replace(
     /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
     ""
@@ -28,5 +28,6 @@ export async function getHtmlFromUrl({
   await page.setViewport({ width: 1920, height: 1080 });
   await page.goto(url, { waitUntil: "domcontentloaded" });
   const html = await page.content();
-  return html;
+  const title = await page.title();
+  return { html, title };
 }

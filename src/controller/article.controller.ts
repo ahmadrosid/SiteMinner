@@ -2,7 +2,7 @@ import { apiContract } from "../lib/contract.js";
 import { ServerInferRequest, ServerInferResponses } from "@ts-rest/core";
 import { extractFromHtml } from "@extractus/article-extractor";
 import TurndownService from "turndown";
-import { getHtmlFromUrl } from "../lib/browser.js";
+import { getHtmlFromUrl, cleanUpHtml } from "../lib/browser.js";
 const turndownService = new TurndownService();
 
 type Request = ServerInferRequest<typeof apiContract>["articleExtractor"];
@@ -21,27 +21,39 @@ export async function articleExtractor({
     };
   }
 
-  const html = await getHtmlFromUrl({
+  const { html, title } = await getHtmlFromUrl({
     url: body.url,
     access_token: query.access_token,
   });
 
   const data = await extractFromHtml(html, body.url);
-  if (!data) {
+  if (data) {
     return {
-      status: 404,
+      status: 200,
       body: {
-        error: "No content found",
+        url: body.url,
+        content: turndownService.turndown(data?.content || ""),
+        title: title,
+      },
+    };
+  }
+
+  const markdownContent = turndownService.turndown(cleanUpHtml(html));
+  if (markdownContent) {
+    return {
+      status: 200,
+      body: {
+        url: body.url,
+        content: markdownContent,
+        title: title,
       },
     };
   }
 
   return {
-    status: 200,
+    status: 404,
     body: {
-      url: body.url,
-      content: turndownService.turndown(data?.content || ""),
-      title: data?.title || "",
+      error: "No content found",
     },
   };
 }

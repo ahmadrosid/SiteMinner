@@ -13,6 +13,7 @@ app.use(express.json());
 
 const restServer = initServer();
 const router = restServer.router(apiContract, controller);
+createExpressEndpoints(apiContract, router, app);
 
 const openApiConfig = {
   openapi: "3.0.0",
@@ -40,7 +41,8 @@ const openApiDocument = generateOpenApi(apiContract, openApiConfig, {
 });
 
 // Hide access_token from markdown endpoint
-// openApiDocument.paths["/markdown"].post.parameters = [];
+openApiDocument.paths["/markdown"].post.parameters = [];
+openApiDocument.paths["/embed-extractor"].post.parameters = [];
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
@@ -48,8 +50,6 @@ app.get("/swagger.json", (req, res) => {
   res.contentType("application/json");
   res.send(JSON.stringify(openApiDocument, null, 2));
 });
-
-createExpressEndpoints(apiContract, router, app);
 
 const port = process.env.port || 3333;
 const server = app.listen(port, () => {

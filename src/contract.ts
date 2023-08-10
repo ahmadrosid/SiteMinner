@@ -37,17 +37,15 @@ export const apiContract = contract.router({
     summary: "Turn any website into markdown text by website url",
   },
   embedExrtractor: {
-    method: "POST",
+    method: "GET",
     path: "/embed-extractor",
     responses: {
       200: EmbedResponseSchema,
       401: ErrorSchema,
       404: ErrorSchema,
     },
-    body: z.object({
-      siteUrl: z.string(),
-    }),
     query: z.object({
+      siteUrl: z.string(),
       access_token: z.string(),
     }),
     summary: "Get embedding data from any url",

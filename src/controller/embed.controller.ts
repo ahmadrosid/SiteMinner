@@ -5,11 +5,8 @@ import { extract } from "@extractus/oembed-extractor";
 type Request = ServerInferRequest<typeof apiContract>["embedExrtractor"];
 type Response = ServerInferResponses<typeof apiContract>["embedExrtractor"];
 
-export async function embedExrtractor({
-  query,
-  body,
-}: Request): Promise<Response> {
-  console.log(body, query);
+export async function embedExrtractor({ query }: Request): Promise<Response> {
+  console.log(query);
 
   if (!query.access_token) {
     return {
@@ -20,7 +17,7 @@ export async function embedExrtractor({
     };
   }
 
-  const data = await extract(body.siteUrl);
+  const data = await extract(query.siteUrl);
   if (!data) {
     return {
       status: 404,
@@ -33,7 +30,7 @@ export async function embedExrtractor({
   return {
     status: 200,
     body: {
-      url: body.siteUrl,
+      url: query.siteUrl,
       title: data.title || "",
       data: data,
     },

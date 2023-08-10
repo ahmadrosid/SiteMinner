@@ -22,7 +22,7 @@ const ErrorSchema = z.object({
 const apiContract = contract.router({
   embedExrtractor: {
     method: "GET",
-    path: "/embed-extractor",
+    path: "/extractor/embedding-data",
     responses: {
       200: EmbedResponseSchema,
       401: ErrorSchema,
@@ -34,9 +34,9 @@ const apiContract = contract.router({
     }),
     summary: "Get embedding data from any url",
   },
-  markdown: {
+  articleExtractor: {
     method: "POST",
-    path: "/markdown",
+    path: "/extractor/article",
     responses: {
       200: MardownResponseSchema,
       401: ErrorSchema,

@@ -5,10 +5,13 @@ import TurndownService from "turndown";
 import { getHtmlFromUrl } from "../lib/browser.js";
 const turndownService = new TurndownService();
 
-type Request = ServerInferRequest<typeof apiContract>["markdown"];
-type Response = ServerInferResponses<typeof apiContract>["markdown"];
+type Request = ServerInferRequest<typeof apiContract>["articleExtractor"];
+type Response = ServerInferResponses<typeof apiContract>["articleExtractor"];
 
-export async function markdown({ query, body }: Request): Promise<Response> {
+export async function articleExtractor({
+  query,
+  body,
+}: Request): Promise<Response> {
   if (!query.access_token) {
     return {
       status: 401,

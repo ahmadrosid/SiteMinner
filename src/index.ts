@@ -39,9 +39,9 @@ const openApiConfig = {
 const openApiDocument = generateOpenApi(apiContract, openApiConfig, {
   setOperationId: true,
 });
-openApiDocument.paths["/markdown"].post.parameters = [];
-openApiDocument.paths["/embed-extractor"].get.parameters =
-  openApiDocument.paths["/embed-extractor"].get.parameters.filter(
+openApiDocument.paths["/extractor/article"].post.parameters = [];
+openApiDocument.paths["/extractor/embedding-data"].get.parameters =
+  openApiDocument.paths["/extractor/embedding-data"].get.parameters.filter(
     (item: any) => item.name !== "access_token"
   );
 

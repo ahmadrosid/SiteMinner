@@ -40,10 +40,6 @@ const openApiDocument = generateOpenApi(apiContract, openApiConfig, {
   setOperationId: true,
 });
 
-// Hide access_token from markdown endpoint
-openApiDocument.paths["/markdown"].post.parameters = [];
-openApiDocument.paths["/embed-extractor"].post.parameters = [];
-
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 app.get("/swagger.json", (req, res) => {

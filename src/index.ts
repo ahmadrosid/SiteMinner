@@ -3,7 +3,7 @@ import cors from "cors";
 import { initServer, createExpressEndpoints } from "@ts-rest/express";
 import { apiContract } from "./contract";
 import { generateOpenApi } from "@ts-rest/open-api";
-import { serve, setup } from "swagger-ui-express";
+import * as swaggerUi from "swagger-ui-express";
 import { extractFromHtml } from "@extractus/article-extractor";
 import puppeteer from "puppeteer-core";
 import TurndownService from "turndown";
@@ -93,17 +93,18 @@ const openApiConfig = {
   },
 };
 
-const openapiDocument = generateOpenApi(apiContract, openApiConfig, {
+const openApiDocument = generateOpenApi(apiContract, openApiConfig, {
   setOperationId: true,
 });
 
 // Hide access_token from markdown endpoint
-openapiDocument.paths["/markdown"].post.parameters = [];
+openApiDocument.paths["/markdown"].post.parameters = [];
 
-app.use("/docs", serve, setup(openapiDocument));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+
 app.get("/swagger.json", (req, res) => {
   res.contentType("application/json");
-  res.send(JSON.stringify(openapiDocument, null, 2));
+  res.send(JSON.stringify(openApiDocument, null, 2));
 });
 
 createExpressEndpoints(apiContract, router, app);

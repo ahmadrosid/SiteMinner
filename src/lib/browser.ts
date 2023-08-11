@@ -29,5 +29,6 @@ export async function getHtmlFromUrl({
   await page.goto(url, { waitUntil: "domcontentloaded" });
   const html = await page.content();
   const title = await page.title();
+  await page.close();
   return { html, title };
 }

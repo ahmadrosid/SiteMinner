@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer-core";
+import sanitizeHtml from "sanitize-html";
 
 export function cleanUpHtml(html: string) {
   let newHtml = html.replace(
@@ -30,5 +31,5 @@ export async function getHtmlFromUrl({
   const html = await page.content();
   const title = await page.title();
   await page.close();
-  return { html, title };
+  return { html: sanitizeHtml(html), title };
 }

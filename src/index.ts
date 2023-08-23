@@ -47,9 +47,8 @@ openApiDocument.paths["/extractor/embedding-data"].get.parameters =
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
-app.get("/swagger.json", (req, res) => {
-  res.contentType("application/json");
-  res.send(JSON.stringify(openApiDocument, null, 2));
+app.get("/swagger.json", (req: any, res: any) => {
+  res.json(openApiDocument);
 });
 
 const port = process.env.port || 3333;

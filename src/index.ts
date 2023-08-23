@@ -51,7 +51,7 @@ app.get("/swagger.json", (req: any, res: any) => {
   res.json(openApiDocument);
 });
 
-const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+const { PORT = 3333 } = process.env;
+app.listen(PORT, () => {
+  console.log(`Listening at http://localhost:${PORT}`);
 });
